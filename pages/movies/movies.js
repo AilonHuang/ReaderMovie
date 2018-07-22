@@ -1,4 +1,4 @@
-// pages/movies/movies.js
+var appInstance = getApp()
 Page({
 
   /**
@@ -12,55 +12,54 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var doubanBase = appInstance.globalData.doubanBase;
+    var inTheatersUrl = doubanBase + '/v2/movie/in_theaters?start=0&count=3';
+    var comingSoonUrl = doubanBase + '/v2/movie/coming_soon?start=0&count=3';
+    var top250Url = doubanBase + '/v2/movie/top250?start=0&count=3'
+
+    this.getMovieListData(inTheatersUrl, '正在热映', 'inTheaters');
+    this.getMovieListData(comingSoonUrl, '即将上映', 'comingSoon');
+    this.getMovieListData(top250Url, 'Top250', 'top250');
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  getMovieListData: function(url, title, settedKey) {
+    var that = this;
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.processDoubanData(res.data, settedKey);
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+  processDoubanData: function (moviesDouban, settedKey) {
+    var movies = [];
+    for (var index in moviesDouban.subjects) {
+      var subject = moviesDouban.subjects[index];
+      var title = subject.title;
+      if (title.length >= 6) {
+        title = title.substring(0,6) + '...';
+      }
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
+      var temp = {
+        title: title,
+        average: subject.rating.average,
+        coverageUrl: subject.images.large,
+        movieId: subject.id
+      }
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
+      console.log(temp)
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
+      movies.push(temp);
+    }
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    var readyData = {};
+    readyData[settedKey] = {
+      movies: movies
+    };
+    this.setData(readyData);
   }
 })
