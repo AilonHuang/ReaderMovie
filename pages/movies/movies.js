@@ -23,7 +23,7 @@ Page({
     this.getMovieListData(top250Url, 'Top250', 'top250');
   },
 
-  getMovieListData: function(url, title, settedKey) {
+  getMovieListData: function(url, categoryTitle, settedKey) {
     var that = this;
     wx.request({
       url: url,
@@ -31,12 +31,12 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
-        that.processDoubanData(res.data, settedKey);
+        that.processDoubanData(res.data, categoryTitle, settedKey);
       }
     })
   },
 
-  processDoubanData: function (moviesDouban, settedKey) {
+  processDoubanData: function (moviesDouban, categoryTitle, settedKey) {
     var movies = [];
     for (var index in moviesDouban.subjects) {
       var subject = moviesDouban.subjects[index];
@@ -58,6 +58,7 @@ Page({
 
     var readyData = {};
     readyData[settedKey] = {
+      categoryTitle: categoryTitle,
       movies: movies
     };
     this.setData(readyData);
