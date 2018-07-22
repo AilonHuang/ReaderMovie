@@ -1,3 +1,4 @@
+var util = require('../../utils/util.js')
 var appInstance = getApp()
 Page({
 
@@ -46,12 +47,11 @@ Page({
 
       var temp = {
         title: title,
+        stars: util.convertToStarsArray(subject.rating.stars),
         average: subject.rating.average,
         coverageUrl: subject.images.large,
         movieId: subject.id
       }
-
-      console.log(temp)
 
       movies.push(temp);
     }
