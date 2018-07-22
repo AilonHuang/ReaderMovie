@@ -48,10 +48,10 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "post-detail",
 					"pathName": "pages/posts/post-detail/post-detail",
-					"query": ""
+					"query": "id=1"
 				}
 			]
 		}
