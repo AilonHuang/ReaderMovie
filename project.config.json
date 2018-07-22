@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -52,6 +52,12 @@
 					"name": "post-detail",
 					"pathName": "pages/posts/post-detail/post-detail",
 					"query": "id=1"
+				},
+				{
+					"id": -1,
+					"name": "movie",
+					"pathName": "pages/movies/movies",
+					"query": ""
 				}
 			]
 		}
