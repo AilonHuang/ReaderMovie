@@ -23,6 +23,13 @@ Page({
     this.getMovieListData(top250Url, 'Top250', 'top250');
   },
 
+  onMoreTap: function(event) {
+    var category = event.currentTarget.dataset.category;
+    wx.navigateTo({
+      url: 'more-movie/more-movie?category=' + category,
+    })
+  },
+
   getMovieListData: function(url, categoryTitle, settedKey) {
     var that = this;
     wx.request({
