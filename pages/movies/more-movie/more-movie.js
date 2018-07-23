@@ -80,6 +80,7 @@ Page({
     this.setData({
       totalCount: this.data.totalCount += 20
     })
+    wx.hideNavigationBarLoading()
   },
 
   onReady: function() {
@@ -92,5 +93,6 @@ Page({
   onReachBottom: function () {
     var nextUrl = this.data.requestUrl + '?start=' + this.data.totalCount + '&count=20'
     util.http(nextUrl, this.processDoubanData)
+    wx.showNavigationBarLoading()
   },
 })
