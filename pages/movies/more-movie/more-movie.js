@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    totalCount: 0,
+    isEmpty: true,
   },
 
   /**
@@ -35,7 +36,9 @@ Page({
         var dataUrl = doubanBase + '/v2/movie/top250'
         break;
     }
-
+    this.setData({
+      requestUrl: dataUrl
+    })
     util.http(dataUrl, this.processDoubanData)
   },
 
@@ -61,9 +64,22 @@ Page({
 
     var readyData = {};
     
+    if (!this.data.isEmpty) {
+      var totalMovies = this.data.movies.concat(movies);
+    } else {
+      var totalMovies = movies; 
+      this.setData({
+        isEmpty: false
+      })
+    }
+
     this.setData({
-      movies: movies
+      movies: totalMovies
     });
+
+    this.setData({
+      totalCount: this.data.totalCount += 20
+    })
   },
 
   onReady: function() {
@@ -71,5 +87,10 @@ Page({
     wx.setNavigationBarTitle({
       title: this.data.navigateTitle
     })
+  },
+
+  onReachBottom: function () {
+    var nextUrl = this.data.requestUrl + '?start=' + this.data.totalCount + '&count=20'
+    util.http(nextUrl, this.processDoubanData)
   },
 })
