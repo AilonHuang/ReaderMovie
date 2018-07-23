@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    containerShow: true,
+    searchPanelShow: false,
   },
 
   /**
@@ -69,5 +70,19 @@ Page({
       movies: movies
     };
     this.setData(readyData);
+  },
+
+  onBindFocus: function(event) {
+    this.setData({
+      containerShow: false,
+      searchPanelShow: true,
+    })
+  },
+
+  onCancelImgTap: function(event) {
+    this.setData({
+      containerShow: true,
+      searchPanelShow: false,
+    })
   }
 })
