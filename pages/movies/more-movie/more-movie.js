@@ -81,6 +81,7 @@ Page({
       totalCount: this.data.totalCount += 20
     })
     wx.hideNavigationBarLoading()
+    wx.stopPullDownRefresh()
   },
 
   onReady: function() {
@@ -88,6 +89,15 @@ Page({
     wx.setNavigationBarTitle({
       title: this.data.navigateTitle
     })
+  },
+
+  onPullDownRefresh: function () {
+    var nextUrl = this.data.requestUrl + '?start=0&count=20'
+    this.setData({
+      isEmpty: true
+    })
+    util.http(nextUrl, this.processDoubanData)
+    wx.showNavigationBarLoading()
   },
 
   onReachBottom: function () {
