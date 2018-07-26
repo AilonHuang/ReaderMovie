@@ -56,6 +56,12 @@ Page({
       })
     })
 
+    wx.onBackgroundAudioStop(function() {
+      that.setData({
+        isPlayingMusic: false
+      })
+    })
+
     const backgroundAudioManager = wx.getBackgroundAudioManager()
     if (backgroundAudioManager.paused === false && this.data.postData.music.url === backgroundAudioManager.src) {
       that.setData({

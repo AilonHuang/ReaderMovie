@@ -40,6 +40,7 @@ Page({
       },
       success: function (res) {
         that.processDoubanData(res.data, categoryTitle, settedKey);
+        wx.hideNavigationBarLoading()
       }
     })
   },
@@ -79,10 +80,19 @@ Page({
     })
   },
 
+  onbindconfirm: function(event) {
+    var text = event.detail.value;
+    var doubanBase = appInstance.globalData.doubanBase;
+    var searchUrl = doubanBase + '/v2/movie/search?q=' + text
+    this.getMovieListData(searchUrl, '', 'searchResult')
+    wx.showNavigationBarLoading()
+  },
+
   onCancelImgTap: function(event) {
     this.setData({
       containerShow: true,
       searchPanelShow: false,
+      searchResult: {},
     })
   }
 })
