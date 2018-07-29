@@ -40,6 +40,9 @@ Page({
       requestUrl: dataUrl
     })
     util.http(dataUrl, this.processDoubanData)
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   processDoubanData: function (moviesDouban) {
@@ -96,6 +99,7 @@ Page({
     this.setData({
       isEmpty: true
     })
+    this.data.totalCount = 0;
     util.http(nextUrl, this.processDoubanData)
     wx.showNavigationBarLoading()
   },
@@ -104,5 +108,12 @@ Page({
     var nextUrl = this.data.requestUrl + '?start=' + this.data.totalCount + '&count=20'
     util.http(nextUrl, this.processDoubanData)
     wx.showNavigationBarLoading()
+  },
+
+  onMovieTap: function (event) {
+    var movieId = event.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: '/pages/movies/movie-detail/movie-detail?id=' + movieId,
+    })
   },
 })

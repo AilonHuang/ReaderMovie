@@ -40,6 +40,9 @@ Page({
     }
 
     this.setAudioMonitor();
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   setAudioMonitor: function() {

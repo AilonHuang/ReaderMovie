@@ -22,12 +22,23 @@ Page({
     this.getMovieListData(inTheatersUrl, '正在热映', 'inTheaters');
     this.getMovieListData(comingSoonUrl, '即将上映', 'comingSoon');
     this.getMovieListData(top250Url, 'Top250', 'top250');
+
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   onMoreTap: function(event) {
     var category = event.currentTarget.dataset.category;
     wx.navigateTo({
       url: 'more-movie/more-movie?category=' + category,
+    })
+  },
+
+  onMovieTap: function (event) {
+    var movieId = event.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: '/pages/movies/movie-detail/movie-detail?id=' + movieId,
     })
   },
 

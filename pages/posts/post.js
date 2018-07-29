@@ -18,6 +18,10 @@ Page({
       posts_content: postsData.postList
     })
 
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+
   }, 
 
   onPostTap: function(event) {
